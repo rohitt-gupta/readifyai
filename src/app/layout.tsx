@@ -1,4 +1,4 @@
-// import Navbar from '@/components/Navbar'
+import Navbar from '@/components/Navbar'
 // import Providers from '@/components/Providers'
 import { cn } from '@/lib/utils'
 import { Inter } from 'next/font/google'
@@ -27,7 +27,7 @@ export default function RootLayout({
           inter.className
         )}>
         {/* <Toaster /> */}
-        {/* <Navbar /> */}
+        <Navbar />
         {children}
       </body>
       {/* </Providers> */}
