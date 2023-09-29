@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@kinde-oss/kinde-auth-nextjs": "^1.8.21",
+    "@prisma/client": "^5.3.1",
     "@radix-ui/react-slot": "^1.0.2",
     "@tailwindcss/typography": "^0.5.10",
     "@tanstack/react-query": "^4.35.3",
@@ -35,6 +36,7 @@
     "eslint": "latest",
     "eslint-config-next": "latest",
     "postcss": "latest",
+    "prisma": "^5.3.1",
     "tailwindcss": "latest",
     "typescript": "latest"
   }

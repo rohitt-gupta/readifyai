@@ -5,7 +5,7 @@ import {
   router,
 } from './trpc'
 import { TRPCError } from '@trpc/server'
-// import { db } from '@/db'
+import { db } from '@/db'
 import { z } from 'zod'
 // import { INFINITE_QUERY_LIMIT } from '@/config/infinite-query'
 // import { absoluteUrl } from '@/lib/utils'
@@ -16,45 +16,31 @@ import { z } from 'zod'
 // import { PLANS } from '@/config/stripe'
 
 export const appRouter = router({
-  authCallback: publicProcedure.query(() => {
+  authCallback: publicProcedure.query(async () => {
     const { getUser } = getKindeServerSession()
-    const user = getUser();
+    const user = getUser()
 
-    if (!user.id || !user.email) {
+    if (!user.id || !user.email)// check we get user.id from kinde
       throw new TRPCError({ code: 'UNAUTHORIZED' })
+
+    // check if the user is in the database
+    const dbUser = await db.user.findFirst({
+      where: {
+        id: user.id,
+      },
+    })
+    //if db not present id db...
+    if (!dbUser) {
+      // create user in db
+      await db.user.create({
+        data: {
+          id: user.id,
+          email: user.email,
+        },
+      })
     }
-
-    // check if the user is in the db
-
-    // if user not in the db push it inside the db and return 
     return { success: true }
-  })
-  // authCallback: publicProcedure.query(async () => {
-  //   const { getUser } = getKindeServerSession()
-  //   const user = getUser()
-
-  //   if (!user.id || !user.email)
-  //     throw new TRPCError({ code: 'UNAUTHORIZED' })
-
-  //   // check if the user is in the database
-  //   const dbUser = await db.user.findFirst({
-  //     where: {
-  //       id: user.id,
-  //     },
-  //   })
-
-  //   if (!dbUser) {
-  //     // create user in db
-  //     await db.user.create({
-  //       data: {
-  //         id: user.id,
-  //         email: user.email,
-  //       },
-  //     })
-  //   }
-
-  //   return { success: true }
-  // }),
+  }),
   // getUserFiles: privateProcedure.query(async ({ ctx }) => {
   //   const { userId } = ctx
 
