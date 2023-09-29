@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
-// import 'react-loading-skeleton/dist/skeleton.css'
+import 'react-loading-skeleton/dist/skeleton.css'
 // import 'simplebar-react/dist/simplebar.min.css'
 
 // import { Toaster } from '@/components/ui/toaster'
