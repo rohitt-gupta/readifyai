@@ -82,6 +82,7 @@ export const appRouter = router({
           userId: ctx.userId,
         },
       })
+      // console.log("file", file);
 
       if (!file) return { status: 'PENDING' as const }
 
@@ -173,7 +174,7 @@ export const appRouter = router({
   // ),
 
   // getFileMessages: privateProcedure
-  //   .input(
+  //   .input( // since this is a mutation i.e. a POST request it takes in the below type input
   //     z.object({
   //       limit: z.number().min(1).max(100).nullish(),
   //       cursor: z.string().nullish(),
@@ -181,8 +182,10 @@ export const appRouter = router({
   //     })
   //   )
   //   .query(async ({ ctx, input }) => {
+  //     // destructure the ctx
   //     const { userId } = ctx
   //     const { fileId, cursor } = input
+
   //     const limit = input.limit ?? INFINITE_QUERY_LIMIT
 
   //     const file = await db.file.findFirst({

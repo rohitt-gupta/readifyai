@@ -5,9 +5,10 @@ import {
   type FileRouter,
 } from 'uploadthing/next'
 
-// import { PDFLoader } from 'langchain/document_loaders/fs/pdf'
-// import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
-// import { PineconeStore } from 'langchain/vectorstores/pinecone'
+import { PDFLoader } from 'langchain/document_loaders/fs/pdf'
+import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
+import { getPineconeClient } from '@/lib/pinecone'
+import { PineconeStore } from 'langchain/vectorstores/pinecone'
 // import { getPineconeClient } from '@/lib/pinecone'
 // import { getUserSubscriptionPlan } from '@/lib/stripe'
 // import { PLANS } from '@/config/stripe'
@@ -54,79 +55,90 @@ const onUploadComplete = async ({
     },
   })
 
-  // try {
-  //   const response = await fetch(
-  //     `https://uploadthing-prod.s3.us-west-2.amazonaws.com/${file.key}`
-  //   )
+  try {
+    const response = await fetch(
+      `https://uploadthing-prod.s3.us-west-2.amazonaws.com/${file.key}`
+    )
 
-  //   const blob = await response.blob()
+    const blob = await response.blob()
 
-  //   const loader = new PDFLoader(blob)
+    const loader = new PDFLoader(blob)
 
-  //   const pageLevelDocs = await loader.load()
+    const pageLevelDocs = await loader.load()
 
-  //   const pagesAmt = pageLevelDocs.length
+    const pagesAmt = pageLevelDocs.length
 
-  //   const { subscriptionPlan } = metadata
-  //   const { isSubscribed } = subscriptionPlan
+    // const { subscriptionPlan } = metadata
+    // const { isSubscribed } = subscriptionPlan
 
-  //   const isProExceeded =
-  //     pagesAmt >
-  //     PLANS.find((plan) => plan.name === 'Pro')!.pagesPerPdf
-  //   const isFreeExceeded =
-  //     pagesAmt >
-  //     PLANS.find((plan) => plan.name === 'Free')!
-  //       .pagesPerPdf
+    // const isProExceeded =
+    //   pagesAmt >
+    //   PLANS.find((plan) => plan.name === 'Pro')!.pagesPerPdf
+    // const isFreeExceeded =
+    //   pagesAmt >
+    //   PLANS.find((plan) => plan.name === 'Free')!
+    //     .pagesPerPdf
 
-  //   if (
-  //     (isSubscribed && isProExceeded) ||
-  //     (!isSubscribed && isFreeExceeded)
-  //   ) {
-  //     await db.file.update({
-  //       data: {
-  //         uploadStatus: 'FAILED',
-  //       },
-  //       where: {
-  //         id: createdFile.id,
-  //       },
-  //     })
-  //   }
+    // if (
+    //   (isSubscribed && isProExceeded) ||
+    //   (!isSubscribed && isFreeExceeded)
+    // ) {
+    //   await db.file.update({
+    //     data: {
+    //       uploadStatus: 'FAILED',
+    //     },
+    //     where: {
+    //       id: createdFile.id,
+    //     },
+    //   })
+    // }
 
-  //   // vectorize and index entire document
-  //   const pinecone = await getPineconeClient()
-  //   const pineconeIndex = pinecone.Index('quill')
+    // vectorize and index entire document
 
-  //   const embeddings = new OpenAIEmbeddings({
-  //     openAIApiKey: process.env.OPENAI_API_KEY,
-  //   })
+    const pinecone = await getPineconeClient()
+    const pineconeIndex = pinecone.Index('chatpdf')
 
-  //   await PineconeStore.fromDocuments(
-  //     pageLevelDocs,
-  //     embeddings,
-  //     {
-  //       pineconeIndex,
-  //       namespace: createdFile.id,
-  //     }
-  //   )
+    const embeddings = new OpenAIEmbeddings({
+      openAIApiKey: process.env.OPENAI_API_KEY,
+    })
 
-  //   await db.file.update({
-  //     data: {
-  //       uploadStatus: 'SUCCESS',
-  //     },
-  //     where: {
-  //       id: createdFile.id,
-  //     },
-  //   })
-  // } catch (err) {
-  //   await db.file.update({
-  //     data: {
-  //       uploadStatus: 'FAILED',
-  //     },
-  //     where: {
-  //       id: createdFile.id,
-  //     },
-  //   })
-  // }
+
+    try {
+      await PineconeStore.fromDocuments(
+        pageLevelDocs,
+        embeddings,
+        {
+          pineconeIndex,
+          namespace: "",
+        }
+      );
+    } catch (error) {
+      console.error('PineconeStore.fromDocuments error:', error);
+    }
+    // able to get
+    // console.log("pinecone status");
+
+    await db.file.update({
+      data: {
+        uploadStatus: 'SUCCESS',
+      },
+      where: {
+        id: createdFile.id,
+      },
+    })
+    // able to get this as well
+  } catch (err) {
+    console.log("error in core.ts", err);
+
+    await db.file.update({
+      data: {
+        uploadStatus: 'FAILED',
+      },
+      where: {
+        id: createdFile.id,
+      },
+    })
+  }
 }
 
 export const ourFileRouter = {
