@@ -96,7 +96,7 @@ const onUploadComplete = async ({
     // vectorize and index entire document
 
     const pinecone = await getPineconeClient()
-    const pineconeIndex = pinecone.Index('chatpdf')
+    const pineconeIndex = pinecone.Index('aipdf')
 
     const embeddings = new OpenAIEmbeddings({
       openAIApiKey: process.env.OPENAI_API_KEY,
@@ -109,7 +109,7 @@ const onUploadComplete = async ({
         embeddings,
         {
           pineconeIndex,
-          namespace: "",
+          namespace: createdFile.id,
         }
       );
     } catch (error) {
