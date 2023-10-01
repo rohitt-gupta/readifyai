@@ -29,11 +29,10 @@ const UploadDropzone = ({
     useState<number>(0)
   const { toast } = useToast()
 
-  // const { startUpload } = useUploadThing(
-  //   isSubscribed ? 'proPlanUploader' : 'freePlanUploader'
-  // )
+  const { startUpload } = useUploadThing(
+    isSubscribed ? 'proPlanUploader' : 'freePlanUploader'
+  )
 
-  const { startUpload } = useUploadThing('proPlanUploader')
 
   const { mutate: startPolling } = trpc.getFile.useMutation(
     {
@@ -170,7 +169,7 @@ const UploadDropzone = ({
 const UploadButton = ({
   isSubscribed,
 }: {
-  isSubscribed?: boolean
+  isSubscribed: boolean
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
@@ -190,7 +189,7 @@ const UploadButton = ({
 
       <DialogContent>
         Hello
-        <UploadDropzone isSubscribed={true} />
+        <UploadDropzone isSubscribed={isSubscribed} />
       </DialogContent>
     </Dialog>
   )
