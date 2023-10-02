@@ -2,6 +2,9 @@ const { isServer } = require("@tanstack/react-query");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	images: {
+		domains: ["lh3.googleusercontent.com"], // Add the lh3.googleusercontent.com domain here
+	},
 	async redirects() {
 		return [
 			{
