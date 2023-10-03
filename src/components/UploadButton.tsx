@@ -188,7 +188,6 @@ const UploadButton = ({
       </DialogTrigger>
 
       <DialogContent>
-        Hello
         <UploadDropzone isSubscribed={isSubscribed} />
       </DialogContent>
     </Dialog>
