@@ -114,27 +114,19 @@ export const POST = async (req: NextRequest) => {
       },
     ],
   })
-  // console.log("reached here.");
 
-  let stream;
-  try {
-    stream = OpenAIStream(response as any, {
-      async onCompletion(completion) {
-        await db.message.create({
-          data: {
-            text: completion,
-            isUserMessage: false,
-            fileId,
-            userId,
-          },
-        })
-      },
-    })
-  } catch (error) {
-    console.log("error in sending back stream", error);
-  }
+  const stream = OpenAIStream(response as any, {
+    async onCompletion(completion) {
+      await db.message.create({
+        data: {
+          text: completion,
+          isUserMessage: false,
+          fileId,
+          userId,
+        },
+      })
+    },
+  })
 
-
-
-  return new StreamingTextResponse(stream as any)
+  return new StreamingTextResponse(stream)
 }

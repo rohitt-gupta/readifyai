@@ -1,4 +1,3 @@
-3
 import { db } from '@/db'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import {
@@ -8,8 +7,8 @@ import {
 
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf'
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
-import { getPineconeClient } from '@/lib/pinecone'
 import { PineconeStore } from 'langchain/vectorstores/pinecone'
+import { getPineconeClient } from '@/lib/pinecone'
 import { getUserSubscriptionPlan } from '@/lib/stripe'
 import { PLANS } from '@/config/stripe'
 
@@ -23,7 +22,6 @@ const middleware = async () => {
 
   const subscriptionPlan = await getUserSubscriptionPlan()
 
-  // return { userId: user.id }
   return { subscriptionPlan, userId: user.id }
 }
 
@@ -80,7 +78,6 @@ const onUploadComplete = async ({
       PLANS.find((plan) => plan.name === 'Free')!
         .pagesPerPdf
 
-    // if any user is exceeding the maximum number of pages then return failed plan.
     if (
       (isSubscribed && isProExceeded) ||
       (!isSubscribed && isFreeExceeded)
@@ -96,7 +93,6 @@ const onUploadComplete = async ({
     }
 
     // vectorize and index entire document
-
     const pinecone = await getPineconeClient()
     const pineconeIndex = pinecone.Index('aipdf')
 
@@ -104,21 +100,14 @@ const onUploadComplete = async ({
       openAIApiKey: process.env.OPENAI_API_KEY,
     })
 
-
-    try {
-      await PineconeStore.fromDocuments(
-        pageLevelDocs,
-        embeddings,
-        {
-          pineconeIndex,
-          namespace: createdFile.id,
-        }
-      );
-    } catch (error) {
-      console.error('PineconeStore.fromDocuments error:', error);
-    }
-    // able to get
-    // console.log("pinecone status");
+    await PineconeStore.fromDocuments(
+      pageLevelDocs,
+      embeddings,
+      {
+        pineconeIndex,
+        namespace: createdFile.id,
+      }
+    )
 
     await db.file.update({
       data: {
@@ -128,10 +117,7 @@ const onUploadComplete = async ({
         id: createdFile.id,
       },
     })
-    // able to get this as well
   } catch (err) {
-    console.log("error in core.ts", err);
-
     await db.file.update({
       data: {
         uploadStatus: 'FAILED',
