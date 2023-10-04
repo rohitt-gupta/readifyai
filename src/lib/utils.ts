@@ -44,7 +44,7 @@ export function constructMetadata({
       title,
       description,
       images: [image],
-      creator: "@joshtriedcoding"
+      creator: "@whyrohitwhy"
     },
     icons,
     metadataBase: new URL('https://chatpdf-saas.vercel.app/'),

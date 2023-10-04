@@ -7,7 +7,7 @@ import { ChevronLeft, Loader2, XCircle } from 'lucide-react'
 import Link from 'next/link'
 import { buttonVariants } from '../ui/button'
 import { ChatContextProvider } from './ChatContext'
-// import { PLANS } from '@/config/stripe'
+import { PLANS } from '@/config/stripe'
 
 interface ChatWrapperProps {
   fileId: string
@@ -31,8 +31,6 @@ const ChatWrapper = ({
             : 500,
       }
     )
-  // console.log("data from getFileuploadSuccess", data);
-
 
   if (isLoading)
     return (
@@ -87,11 +85,11 @@ const ChatWrapper = ({
                 {isSubscribed ? 'Pro' : 'Free'}
               </span>{' '}
               plan supports up to{' '}
-              {/* {isSubscribed
+              {isSubscribed
                 ? PLANS.find((p) => p.name === 'Pro')
-                    ?.pagesPerPdf
+                  ?.pagesPerPdf
                 : PLANS.find((p) => p.name === 'Free')
-                    ?.pagesPerPdf}{' '} */}
+                  ?.pagesPerPdf}{' '}
               pages per PDF.
             </p>
             <Link
@@ -114,7 +112,6 @@ const ChatWrapper = ({
     <ChatContextProvider fileId={fileId}>
       <div className='relative min-h-full bg-zinc-50 flex divide-y divide-zinc-200 flex-col justify-between gap-2'>
         <div className='flex-1 justify-between flex flex-col mb-28'>
-          {/* messages */}
           <Messages fileId={fileId} />
         </div>
 

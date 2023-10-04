@@ -131,7 +131,7 @@ const Page = () => {
                         {tagline}
                       </p>
                       <p className='my-5 font-display text-6xl font-semibold'>
-                        ${price}
+                        ₹{price}
                       </p>
                       <p className='text-gray-500'>
                         per month

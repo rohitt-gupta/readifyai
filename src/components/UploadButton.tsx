@@ -10,11 +10,11 @@ import { Button } from './ui/button'
 
 import Dropzone from 'react-dropzone'
 import { Cloud, File, Loader2 } from 'lucide-react'
+import { Progress } from './ui/progress'
 import { useUploadThing } from '@/lib/uploadthing'
 import { useToast } from './ui/use-toast'
 import { trpc } from '@/app/_trpc/client'
 import { useRouter } from 'next/navigation'
-import { Progress } from './ui/progress'
 
 const UploadDropzone = ({
   isSubscribed,
@@ -33,12 +33,9 @@ const UploadDropzone = ({
     isSubscribed ? 'proPlanUploader' : 'freePlanUploader'
   )
 
-
   const { mutate: startPolling } = trpc.getFile.useMutation(
     {
       onSuccess: (file) => {
-        console.log("success");
-
         router.push(`/dashboard/${file.id}`)
       },
       retry: true,
@@ -97,9 +94,7 @@ const UploadDropzone = ({
         setUploadProgress(100)
 
         startPolling({ key })
-      }}
-    >
-
+      }}>
       {({ getRootProps, getInputProps, acceptedFiles }) => (
         <div
           {...getRootProps()}
