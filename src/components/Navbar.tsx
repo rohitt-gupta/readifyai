@@ -6,7 +6,7 @@ import {
   RegisterLink,
   getKindeServerSession,
 } from '@kinde-oss/kinde-auth-nextjs/server'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Github } from 'lucide-react'
 import UserAccountNav from './UserAccountNav'
 import MobileNav from './MobileNav'
 
@@ -29,6 +29,15 @@ const Navbar = () => {
           <div className='hidden items-center space-x-4 sm:flex'>
             {!user ? (
               <>
+                <Link
+                  target='_blank'
+                  href='https://github.com/rohitt-gupta/chatpdf-saas'
+                  className={buttonVariants({
+                    variant: 'ghost',
+                    size: 'sm',
+                  })}>
+                  <Github className='w-5 h-5' />
+                </Link>
                 <Link
                   href='/pricing'
                   className={buttonVariants({
@@ -54,6 +63,15 @@ const Navbar = () => {
               </>
             ) : (
               <>
+                <Link
+                  target='_blank'
+                  href='https://github.com/rohitt-gupta/chatpdf-saas'
+                  className={buttonVariants({
+                    variant: 'ghost',
+                    size: 'sm',
+                  })}>
+                  <Github className='w-5 h-5' />
+                </Link>
                 <Link
                   href='/dashboard'
                   className={buttonVariants({
