@@ -210,11 +210,11 @@ export const ChatContextProvider = ({
         { messages: context?.previousMessages ?? [] }
       )
     },
-    onSettled: async () => {
-      setIsLoading(false)
+    // onSettled: async () => {
+    //   setIsLoading(false)
 
-      await utils.getFileMessages.invalidate({ fileId })
-    },
+    //   await utils.getFileMessages.invalidate({ fileId })
+    // },
   })
 
   const handleInputChange = (
