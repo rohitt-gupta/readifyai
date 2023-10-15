@@ -18,7 +18,8 @@ interface Message {
   content: string;
 }
 
-
+// where to add cercel max duration configuration in this
+export const maxDuration = 5;
 export const POST = async (req: NextRequest) => {
   // endpoint for asking a question to a pdf file
 
