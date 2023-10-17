@@ -38,6 +38,7 @@
     "lucide-react": "^0.279.0",
     "next": "latest",
     "openai": "^4.11.0",
+    "openai-edge": "^1.2.2",
     "pdf-parse": "^1.1.1",
     "react": "latest",
     "react-dom": "latest",
