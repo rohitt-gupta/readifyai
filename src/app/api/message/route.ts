@@ -86,7 +86,7 @@ export const POST = async (req: NextRequest) => {
   );
 
   // Choose the appropriate GPT model based on token count
-  const modelToUse = conversationTokens < 3000 - interval ? 'gpt-3.5-turbo' : 'gpt-3.5-turbo-16k';
+  const modelToUse = conversationTokens < 4000 - interval ? 'gpt-3.5-turbo' : 'gpt-3.5-turbo-16k';
 
 
   const response = await openai.createChatCompletion({
