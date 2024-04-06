@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Project Name
 
-## Getting Started
+## Introduction
+This project is a [Next.js](https://nextjs.org/) application that allows users to chat with PDF files using ReadifyAI. The project is aimed at simplifying the process of interacting with documents and enhancing user experience.
 
-First, run the development server:
+## Problem Statement
+The project addresses the need for a platform that enables users to easily chat with PDF files, streamlining communication and enhancing productivity in document-related tasks.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
+- Chat with PDF files in real-time
+- User-friendly interface
+- Different subscription plans for varying needs
+- Priority support for Pro users
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
+- Next.js
+- Tailwind CSS
+- React
+- TypeScript
+- Lucide React
+- Prisma
+- Stripe
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation
+1. Clone the repository
+2. Install dependencies with `npm install`
+3. Start the development server with `npm run dev`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Usage
+1. Sign up for an account
+2. Upload your PDF file
+3. Start asking questions
 
-## Learn More
+## Contributing
+- Fork the repository
+- Create a new branch
+- Make your changes
+- Submit a pull request
 
-To learn more about Next.js, take a look at the following resources:
+## Contact
+For any questions or feedback, please contact [pta.rohit28@gmail.com](mailto:pta.rohit28@gmail.com) or DM me on [Twitter](https://twitter.com/whyrohitwhy)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Don't forget to star the repository if you find it useful!
